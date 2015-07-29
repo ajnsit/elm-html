@@ -72,11 +72,33 @@ detail.
 -}
 type alias Html = VirtualDom.Node
 
+{-| A raw dom node. Must be used to render a `widget`.
+You can convert from `Html` to `RawHtml` with `render`
+-}
+type alias RawHtml = VirtualDom.RawNode
 
 {-| Set attributes on your `Html`.
 -}
 type alias Attribute = VirtualDom.Property
 
+
+{-| vdom widgets
+ -}
+widget : (a -> RawHtml) -> (a -> a -> Bool) -> a -> Html
+widget = VirtualDom.widget
+
+{-| Add a child element into a descendent of a raw node
+This uses document.querySelectorAll
+-}
+insert : String -> RawHtml -> RawHtml -> RawHtml
+insert =
+  VirtualDom.insert
+
+{-| Render a `Html` to a `RawHtml`
+ -}
+render : Html -> RawHtml
+render =
+  VirtualDom.render
 
 {-| General way to create HTML nodes. It is used to define all of the helper
 functions in this library.
